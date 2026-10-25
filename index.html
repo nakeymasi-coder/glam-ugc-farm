@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glam UGC Farm - Glam Hustle Hub</title>
+<style>
+  :root{
+    --sapphire:#4a90d9; --sapphire-light:#a8cdf0; --sapphire-pale:#e8f2fc;
+    --silver:#b8c2cc; --silver-light:#e6eaee; --pearl:#fdfcfa; --ink:#2b3440;
+    --soft:#5a6a7a; --line:#d9e2ec; --good:#1e9e6a; --warn:#c77400;
+    --grad:linear-gradient(135deg,#a8cdf0 0%,#e6eaee 52%,#fdfcfa 100%);
+    --grad-btn:linear-gradient(135deg,#4a90d9,#8fbde8);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Georgia,'Times New Roman',serif;background:var(--pearl);color:var(--ink)}
+  .wrap{max-width:1080px;margin:0 auto;padding:18px 16px 40px}
+  header.hero{background:var(--grad);border:1px solid var(--line);border-radius:24px;padding:28px 22px;text-align:center;box-shadow:0 10px 30px rgba(74,144,217,.14)}
+  header.hero .fly{font-size:40px}
+  header.hero h1{margin:6px 0 4px;font-size:34px;letter-spacing:.5px}
+  header.hero p{margin:4px auto;max-width:680px;color:var(--soft);font-size:16px;line-height:1.5}
+  .brandline{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--sapphire)}
+  nav.tabs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:18px 0}
+  nav.tabs button{border:1px solid var(--sapphire-light);background:#fff;color:var(--ink);padding:10px 16px;border-radius:999px;font-size:15px;cursor:pointer;font-family:inherit}
+  nav.tabs button.active{background:var(--grad-btn);color:#fff;border-color:var(--sapphire);font-weight:bold}
+  section.page{display:none}
+  section.page.active{display:block}
+  .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;margin:0 0 16px;box-shadow:0 4px 16px rgba(43,52,64,.05)}
+  .card h2{margin:0 0 10px;font-size:22px}
+  .card h3{margin:16px 0 8px;font-size:18px}
+  .card p,.card li{line-height:1.55;color:#3c4754;font-size:15.5px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .mini{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--sapphire-pale)}
+  .mini h4{margin:0 0 6px;font-size:16px}
+  .mini p{margin:0;font-size:14.5px}
+  label{display:block;font-weight:bold;margin:14px 0 6px;font-size:15px}
+  label:first-child{margin-top:0}
+  input[type=text],input[type=url],select,textarea{width:100%;padding:11px 12px;border:1px solid var(--silver);border-radius:10px;font-size:15px;font-family:inherit;background:#fff;color:var(--ink)}
+  textarea{min-height:90px;resize:vertical}
+  .hint{font-size:13.5px;color:var(--soft);margin-top:4px}
+  .btn{display:inline-block;border:none;cursor:pointer;padding:12px 20px;border-radius:999px;font-size:15.5px;font-family:inherit;font-weight:bold;background:var(--grad-btn);color:#fff;margin:6px 6px 6px 0}
+  .btn.secondary{background:#fff;color:var(--sapphire);border:1.5px solid var(--sapphire)}
+  .btn.small{padding:8px 14px;font-size:14px}
+  .btn.danger{background:#fff;color:#b3261e;border:1.5px solid #b3261e}
+  .radio-row{display:flex;gap:10px;flex-wrap:wrap}
+  .radio-pill{border:1.5px solid var(--sapphire-light);border-radius:999px;padding:10px 16px;cursor:pointer;background:#fff;font-size:15px}
+  .radio-pill input{margin-right:6px}
+  .radio-pill:has(input:checked){background:var(--sapphire-pale);border-color:var(--sapphire);font-weight:bold}
+  .slotbox{border:2px dashed var(--sapphire-light);border-radius:14px;padding:12px;text-align:center;background:#fbfdff}
+  .slotframe{width:130px;aspect-ratio:9/16;margin:0 auto 10px;border-radius:10px;background:var(--silver-light);display:flex;align-items:center;justify-content:center;overflow:hidden;color:var(--soft);font-size:13px}
+  .slotframe img{width:100%;height:100%;object-fit:cover;display:block}
+  .badge{display:inline-block;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:bold;background:var(--silver-light);color:var(--soft)}
+  .badge.locked{background:#dff5ea;color:var(--good)}
+  .badge.working{background:#fff0d6;color:var(--warn)}
+  .badge.done{background:#dff5ea;color:var(--good)}
+  .empty{border:1.5px dashed var(--silver);border-radius:14px;padding:26px;text-align:center;color:var(--soft);background:#fff}
+  .thumb{width:74px;aspect-ratio:9/16;object-fit:cover;border-radius:8px;border:1px solid var(--line);vertical-align:top}
+  .thumb-missing{width:74px;aspect-ratio:9/16;border-radius:8px;border:1.5px dashed var(--silver);display:inline-flex;align-items:center;justify-content:center;color:var(--soft);font-size:11.5px;text-align:center;padding:4px;vertical-align:top;background:#fafbfc}
+  .kv{font-size:15px;line-height:1.6}
+  .kv b{color:var(--ink)}
+  .prompt-out{white-space:pre-wrap;background:#f7fafd;border:1px solid var(--line);border-radius:12px;padding:14px;font-size:14.5px;line-height:1.55}
+  .notice{background:#fff8e8;border:1px solid #ecd9a0;border-radius:12px;padding:14px 16px;font-size:15px;line-height:1.55}
+  footer.cta{margin-top:28px;background:var(--grad);border:1px solid var(--line);border-radius:20px;padding:22px;text-align:center}
+  footer.cta .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+  footer.cta a{flex:1;max-width:320px;text-decoration:none;padding:14px 18px;border-radius:999px;font-weight:bold;font-size:16px;background:var(--grad-btn);color:#fff;border:1px solid var(--sapphire)}
+  footer.cta a.shop{background:#fff;color:var(--sapphire);border:1.5px solid var(--sapphire)}
+  footer.cta .made{font-size:13.5px;color:var(--soft)}
+  .agent-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  .agent-tabs button{border:1px solid var(--sapphire-light);background:#fff;padding:9px 14px;border-radius:999px;cursor:pointer;font-family:inherit;font-size:14.5px}
+  .agent-tabs button.active{background:var(--grad-btn);color:#fff;font-weight:bold;border-color:var(--sapphire)}
+  .queue-card{border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px;background:#fff;box-shadow:0 3px 12px rgba(43,52,64,.04)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="fly">&#129419;</div>
+  <div class="brandline">Glam Hustle Hub</div>
+  <h1>Glam UGC Farm</h1>
+  <p>One dashboard for your video intake, your locked characters and your run queue. Pick an agent on its own, use a solo form on its own, or run the full farm from the Video Intake Form.</p>
+  <p><b>Please read:</b> this dashboard is your intake, vault and queue control panel. Submitting a form here does not by itself browse Pinterest, generate images or run VideoExpress. Those steps happen in chat, after you use Run in Chat. Nothing is ever posted automatically.</p>
+</header>
+
+<nav class="tabs" id="mainTabs">
+  <button data-page="home" class="active">Home</button>
+  <button data-page="intake">Video Intake Form</button>
+  <button data-page="vault">Character Vault</button>
+  <button data-page="solo">Solo Agent Forms</button>
+  <button data-page="queue">Queue</button>
+</nav>
+
+<!-- HOME -->
+<section class="page active" id="page-home">
+  <div class="card">
+    <h2>How the farm works</h2>
+    <p>The farm takes a run from a Pinterest outfit to a finished 9:16 video, and brings the video back to you in chat for approval. You stay in control the whole way. The dashboard holds everything in one place: the Video Intake Form, solo forms for all 5 agents, the Character Vault for locked characters, and the Queue for runs.</p>
+    <h3>The 5 agents, in order</h3>
+    <div class="grid">
+      <div class="mini"><h4>1. Pinterest Scout</h4><p>Finds outfits and products on Pinterest for your mode and topic, especially products available on Amazon with an affiliate link.</p></div>
+      <div class="mini"><h4>2. Image Agent</h4><p>Creates the person and avatar images, the character references, the outfit reference and the outfit reference sheet. Ultra realistic, PNG, 9:16.</p></div>
+      <div class="mini"><h4>3. Story Agent</h4><p>Writes the hook, the shots and the script, and labels every scene with your Product Presentation choice.</p></div>
+      <div class="mini"><h4>4. VideoExpress Agent</h4><p>Makes the video in VideoExpress with the Consistent Character workflow and returns it in chat for approval. It never posts it.</p></div>
+      <div class="mini"><h4>5. Caption Agent</h4><p>Writes the TikTok caption, the on-screen hook and the hashtags. No price, discount or sale claim unless a live price was actually verified.</p></div>
+    </div>
+    <h3>The 7 modes</h3>
+    <p>Mode is a setting, not a separate farm. It changes the Pinterest search, the story structure, the shots and the captions.</p>
+    <div class="grid">
+      <div class="mini"><p><b>1.</b> Get Ready With Me</p></div>
+      <div class="mini"><p><b>2.</b> Spend The Day With Me</p></div>
+      <div class="mini"><p><b>3.</b> Tutorials in general</p></div>
+      <div class="mini"><p><b>4.</b> Makeup tutorials</p></div>
+      <div class="mini"><p><b>5.</b> Hair tutorials</p></div>
+      <div class="mini"><p><b>6.</b> Product reviews</p></div>
+      <div class="mini"><p><b>7.</b> Cooking videos</p></div>
+    </div>
+    <h3>The Product Presentation rule</h3>
+    <p>Every run picks one single choice, right after mode: <b>Wearing the product</b> or <b>Holding the product</b>. Never both in the same shot. A wearing run ends every prompt with: Wearing the product, not holding it. A holding run ends every prompt with: Holding the product, not wearing it. If a video needs both, holding comes first and wearing comes later, in separate scenes.</p>
+    <h3>How Run in Chat works</h3>
+    <p>Every run in the Queue has a Run in Chat button. Pressing it sets that run to working and opens its Run in Chat card, with the locked character, both slot photos, the voice, the mode, the Product Presentation choice and its exact prompt sentence, the topic, the length and the product details. The card has a Copy prompt button. You paste that prompt into a new chat, and that is what runs the farm. There is no scheduled pickup.</p>
+  </div>
+
+  <div class="card">
+    <h2>The workflow, step by step</h2>
+    <ol>
+      <li><b>Pick the outfit on Pinterest.</b> Choose the Pinterest outfit with an Amazon affiliate link. Copy its picture. Pinterest is searched from guest view, no sign in needed.</li>
+      <li><b>Lock the outfit in chat, not in VideoExpress.</b> Using the locked character reference photos, put that character in that exact outfit in chat first. Check it for face match and outfit match.</li>
+      <li><b>Make the outfit reference sheet in chat.</b> From that approved outfit photo, create one single 9:16 reference sheet with front, profile and three quarter shots of her in that outfit, all on the same photo. Save it as PNG.</li>
+      <li><b>Upload to VideoExpress.</b> Slot 1 is her headshot. Slot 2 is that chat made outfit reference sheet. Never leave Slot 2 empty.</li>
+      <li><b>Create scenes</b> from that headshot plus sheet lock, in script order, 9:16.</li>
+      <li><b>Export and return the video in chat for approval.</b> Do not post, publish or share it.</li>
+    </ol>
+    <h3>VideoExpress, Consistent Character, every time</h3>
+    <p>Go to <a href="https://app.videoexpress.ai/" target="_blank" rel="noopener">VideoExpress</a>, choose Create with AI, go to the first option and click Consistent Character, then use Consistent Character Reference. Reference One is the headshot. Reference Two is the chat made outfit reference sheet. Make sure Consistent Character is selected, then create the image. No character bible is needed. The reference photos are the lock. Do not paste a bible into the scene prompts.</p>
+    <p>Every scene prompt uses this shape, and nothing else about her:</p>
+    <div class="prompt-out">Use the reference images and keep the character perfectly consistent. [Scene action only.] [Spoken line, if any.] Wearing the product, not holding it.</div>
+    <p>Never describe her in the prompt. No face, hair, skin, body or outfit description. Describing her overrides the references and creates a different girl. The last line swaps to the holding version when that is the run choice.</p>
+  </div>
+
+  <div class="card">
+    <h2>Standing rules</h2>
+    <ul>
+      <li><b>Image format:</b> every image created for the farm is PNG, not webp. That covers character images, outfit references and outfit reference sheets. Your own uploaded Vault photos stay as you saved them, JPG or PNG. WebP uploads are not accepted here.</li>
+      <li><b>Characters:</b> ultra realistic, with real skin texture and real hair texture. Within one video, identity, clothing, location and lighting stay frozen from the uploaded reference photos.</li>
+      <li><b>Upload permission:</b> there is a standing permission to upload farm files to VideoExpress for farm runs, covering headshots, body reference sheets, chat made outfit references, outfit reference sheets and scene files. That permission does not cover posting or publishing. Those still need separate approval. Sign in screens and Terms screens still pause for you.</li>
+      <li><b>VideoExpress billing</b> is usage based, not credits. A run does not pause for credits.</li>
+      <li><b>Queue status</b> buttons only change the label to queued, working or done. They do not run Pinterest, image generation or VideoExpress.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Acceptance checklist</h2>
+    <ul>
+      <li>One dashboard with Home, Video Intake Form, Character Vault, Solo Agent Forms and Queue, in Glam Hustle Hub branding, starting completely empty.</li>
+      <li>5 solo agent forms, and the full intake form puts Product Presentation right after mode.</li>
+      <li>Character Vault enforces Slot 1 headshot and Slot 2 single 9:16 reference sheet for every locked character.</li>
+      <li>Queue cards and Run in Chat cards show the Product Presentation choice and its exact prompt sentence, baked into the copied prompts.</li>
+      <li>Run in Chat sets the run to working, shows slot thumbnails and status, and copies a complete run prompt.</li>
+      <li>All workflows are written into the dashboard and the agent prompts: Pinterest guest view, outfit lock in chat, outfit sheet in chat as PNG, Consistent Character first option in VideoExpress, no character description in prompts, and wearing or holding, never both.</li>
+      <li>Dashboard copy states plainly that the dashboard itself does not execute Pinterest, image generation or VideoExpress, and that nothing is auto-posted.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- INTAKE -->
+<section class="page" id="page-intake">
+  <div class="card">
+    <h2>Video Intake Form</h2>
+    <p>Use this form for a complete farm run. Saving it adds the run to the Queue. It does not start Pinterest, image generation or VideoExpress by itself. Use Run in Chat from the Queue when you are ready.</p>
+    <form id="intakeForm">
+      <label for="inCharacter">1. Locked character</label>
+      <select id="inCharacter"></select>
+      <div class="hint">Pick a character from the Vault, or choose New character and add a name and voice. A character is only locked once both Vault slots are filled.</div>
+      <div id="inNewChar" style="display:none">
+        <label for="inNewName">New character name</label>
+        <input type="text" id="inNewName" placeholder="For example: Maya">
+        <label for="inNewVoice">New character voice description</label>
+        <input type="text" id="inNewVoice" placeholder="For example: warm, friendly, a little sassy">
+      </div>
+
+      <label for="inMode">2. Mode</label>
+      <select id="inMode">
+        <option>Get Ready With Me</option>
+        <option>Spend The Day With Me</option>
+        <option>Tutorials in general</option>
+        <option>Makeup tutorials</option>
+        <option>Hair tutorials</option>
+        <option>Product reviews</option>
+        <option>Cooking videos</option>
+      </select>
+
+      <label>3. Product Presentation (pick one)</label>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="inPres" value="wearing" checked> Wearing the product</label>
+        <label class="radio-pill"><input type="radio" name="inPres" value="holding"> Holding the product</label>
+      </div>
+      <div class="hint" id="inPresHint">Prompt sentence: Wearing the product, not holding it.</div>
+
+      <label for="inTopic">4. Topic</label>
+      <input type="text" id="inTopic" required placeholder="What is this video about?">
+
+      <label for="inLength">5. Length</label>
+      <input type="text" id="inLength" placeholder="For example: 30 seconds">
+
+      <label for="inProductName">6. Product name (when there is one)</label>
+      <input type="text" id="inProductName" placeholder="Product name">
+      <label for="inProductLink">Product link</label>
+      <input type="url" id="inProductLink" placeholder="https://">
+
+      <label for="inRefLink">7. Reference video link (when there is one)</label>
+      <input type="url" id="inRefLink" placeholder="https://">
+
+      <label for="inNotes">8. Notes</label>
+      <textarea id="inNotes" placeholder="Anything else the farm needs to know for this run"></textarea>
+
+      <button type="submit" class="btn">Save run to Queue</button>
+    </form>
+    <div id="intakeSaved"></div>
+  </div>
+</section>
+
+<!-- VAULT -->
+<section class="page" id="page-vault">
+  <div class="card">
+    <h2>Character Vault</h2>
+    <p>One record per locked character. Character A is reused as Character A, Character B as Character B, and so on. Every locked character needs both slots:</p>
+    <ul>
+      <li><b>Slot 1, headshot:</b> one photo, 9:16.</li>
+      <li><b>Slot 2, body reference sheet:</b> one single 9:16 photo, not separate photos, with front, side view, profile and three quarter shots all on that same photo.</li>
+    </ul>
+    <p>You can upload a character you already have outside the dashboard. Headshot goes in Slot 1, the single 9:16 body reference sheet goes in Slot 2. Uploads are accepted as JPG or PNG, as you saved them. WebP is not accepted. A character is not locked until both slots are filled.</p>
+    <form id="vaultForm">
+      <label for="vName">Character name</label>
+      <input type="text" id="vName" required placeholder="For example: Maya">
+      <label for="vVoice">Voice description</label>
+      <input type="text" id="vVoice" placeholder="For example: warm, friendly, a little sassy">
+      <button type="submit" class="btn">Add character to Vault</button>
+      <div class="hint">The next letter is assigned for you, A, B, C and so on. Add the two slot photos on the character card after you add her.</div>
+    </form>
+  </div>
+  <div id="vaultList"></div>
+</section>
+
+<!-- SOLO -->
+<section class="page" id="page-solo">
+  <div class="card">
+    <h2>Solo Agent Forms</h2>
+    <p>Use one agent on its own, without a full run. Fill in the form and it builds a clean, ready to copy prompt for that agent job. You can copy the prompt, or add the job to the Queue.</p>
+    <div class="agent-tabs" id="soloTabs">
+      <button data-agent="scout" class="active">1. Pinterest Scout</button>
+      <button data-agent="image">2. Image Agent</button>
+      <button data-agent="story">3. Story Agent</button>
+      <button data-agent="videoexpress">4. VideoExpress Agent</button>
+      <button data-agent="caption">5. Caption Agent</button>
+    </div>
+    <div id="soloForms"></div>
+  </div>
+</section>
+
+<!-- QUEUE -->
+<section class="page" id="page-queue">
+  <div class="card">
+    <h2>Queue</h2>
+    <p>Full farm runs and solo jobs together, newest first. Status is manual: queued, working or done. Changing status does not execute anything. Real execution starts from Run in Chat.</p>
+    <div id="queueList"></div>
+  </div>
+  <div class="card" id="runCardWrap" style="display:none">
+    <h2>Run in Chat</h2>
+    <div id="runCard"></div>
+  </div>
+</section>
+
+<footer class="cta">
+  <div class="row">
+    <a href="https://payhip.com/b/54LoK" target="_blank" rel="noopener">&#10024; Join The Glam Vault</a>
+    <a class="shop" href="https://glamhustlehub.com" target="_blank" rel="noopener">&#128717;&#65039; Shop Glam Hustle Hub</a>
+  </div>
+  <div class="made">made with &#9829; by Indigo, Glam's AI assistant &#129419;</div>
+</footer>
+
+</div>
+
+<script>
+var STORE_KEY = 'glam-ugc-farm-v1';
+var MODES = ['Get Ready With Me','Spend The Day With Me','Tutorials in general','Makeup tutorials','Hair tutorials','Product reviews','Cooking videos'];
+var AGENTS = {
+  scout: {name:'Pinterest Scout', num:1},
+  image: {name:'Image Agent', num:2},
+  story: {name:'Story Agent', num:3},
+  videoexpress: {name:'VideoExpress Agent', num:4},
+  caption: {name:'Caption Agent', num:5}
+};
+var state = {characters:[], queue:[]};
+try {
+  var raw = localStorage.getItem(STORE_KEY);
+  if (raw) { var parsed = JSON.parse(raw); if (parsed && parsed.characters && parsed.queue) state = parsed; }
+} catch(e) {}
+function save(){ try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch(e) { alert('This browser could not save. If you opened this page in an in-app preview, open the file in a regular browser so your Vault and Queue can save.'); } }
+function uid(){ return 'id' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function presSentence(p){ return p === 'holding' ? 'Holding the product, not wearing it.' : 'Wearing the product, not holding it.'; }
+function presLabel(p){ return p === 'holding' ? 'Holding the product' : 'Wearing the product'; }
+function nextLetter(){ var used = state.characters.map(function(c){return c.letter;}); var i = 0; while (used.indexOf(String.fromCharCode(65+i)) !== -1) i++; return String.fromCharCode(65+i); }
+function charById(id){ for (var i=0;i<state.characters.length;i++) if (state.characters[i].id===id) return state.characters[i]; return null; }
+function charLabel(c){ return c ? ('Character ' + c.letter + (c.name ? ' - ' + c.name : '')) : 'No character picked'; }
+
+/* Tabs */
+document.getElementById('mainTabs').addEventListener('click', function(e){
+  if (e.target.tagName !== 'BUTTON') return;
+  showPage(e.target.getAttribute('data-page'));
+});
+function showPage(name){
+  var pages = document.querySelectorAll('section.page');
+  for (var i=0;i<pages.length;i++) pages[i].classList.toggle('active', pages[i].id === 'page-' + name);
+  var btns = document.querySelectorAll('#mainTabs button');
+  for (var j=0;j<btns.length;j++) btns[j].classList.toggle('active', btns[j].getAttribute('data-page') === name);
+  if (name === 'queue') renderQueue();
+  if (name === 'vault') renderVault();
+  if (name === 'intake') fillCharacterPickers();
+  window.scrollTo(0,0);
+}
+
+/* Character pickers */
+function characterOptions(selectedId){
+  var html = '<option value="">Pick a locked character</option>';
+  state.characters.forEach(function(c){
+    var locked = (c.slot1 && c.slot2) ? ' (locked)' : ' (not locked yet)';
+    html += '<option value="' + c.id + '"' + (c.id===selectedId?' selected':'') + '>' + esc(charLabel(c)) + locked + '</option>';
+  });
+  html += '<option value="__new">New character</option>';
+  return html;
+}
+function fillCharacterPickers(){
+  document.getElementById('inCharacter').innerHTML = characterOptions('');
+  document.querySelectorAll('select[data-charpicker]').forEach(function(sel){ sel.innerHTML = characterOptions(sel.getAttribute('data-selected')||''); });
+}
+</script>
+<script>
+/* Vault */
+document.getElementById('vaultForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var name = document.getElementById('vName').value.trim();
+  var voice = document.getElementById('vVoice').value.trim();
+  if (!name) return;
+  state.characters.push({id:uid(), letter:nextLetter(), name:name, voice:voice, slot1:null, slot1Name:'', slot2:null, slot2Name:''});
+  save(); document.getElementById('vaultForm').reset(); renderVault(); fillCharacterPickers();
+});
+function handleSlotFile(charId, slot, file){
+  if (!file) return;
+  var name = (file.name || '').toLowerCase();
+  var type = file.type || '';
+  if (type === 'image/webp' || name.endsWith('.webp')) { alert('WebP is not accepted. Please upload a JPG or PNG, as you saved it.'); return; }
+  var okType = (type === 'image/jpeg' || type === 'image/png' || name.endsWith('.jpg') || name.endsWith('.jpeg') || name.endsWith('.png'));
+  if (!okType) { alert('That file is not accepted. Please upload a JPG or PNG, as you saved it.'); return; }
+  var reader = new FileReader();
+  reader.onload = function(){
+    var c = charById(charId); if (!c) return;
+    c[slot] = reader.result; c[slot + 'Name'] = file.name;
+    save(); renderVault(); fillCharacterPickers();
+  };
+  reader.readAsDataURL(file);
+}
+function renderVault(){
+  var wrap = document.getElementById('vaultList');
+  if (!state.characters.length){
+    wrap.innerHTML = '<div class="empty">Your Vault is empty. Add your first character above, then add her Slot 1 headshot and her Slot 2 body reference sheet on her card.</div>';
+    return;
+  }
+  var html = '';
+  state.characters.slice().sort(function(a,b){return a.letter < b.letter ? -1 : 1;}).forEach(function(c){
+    var locked = !!(c.slot1 && c.slot2);
+    html += '<div class="card"><h3>' + esc(charLabel(c)) + ' &nbsp;<span class="badge' + (locked ? ' locked' : '') + '">' + (locked ? 'Locked' : 'Not locked yet') + '</span></h3>';
+    html += '<p class="kv"><b>Voice:</b> ' + esc(c.voice || 'Not added yet') + '</p>';
+    html += '<div class="grid">';
+    html += '<div class="slotbox"><b>Slot 1, headshot (9:16)</b><div class="slotframe" style="margin-top:10px">' + (c.slot1 ? '<img src="' + c.slot1 + '" alt="Slot 1 headshot">' : 'No photo yet') + '</div>';
+    html += '<div class="hint">' + esc(c.slot1Name || '') + '</div><input type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" onchange="handleSlotFile(\'' + c.id + '\',\'slot1\',this.files[0]); this.value=\'\';"></div>';
+    html += '<div class="slotbox"><b>Slot 2, body reference sheet (one single 9:16 photo)</b><div class="slotframe" style="margin-top:10px">' + (c.slot2 ? '<img src="' + c.slot2 + '" alt="Slot 2 body reference sheet">' : 'No photo yet') + '</div>';
+    html += '<div class="hint">Front, side view, profile and three quarter shots, all on that same photo. ' + esc(c.slot2Name || '') + '</div><input type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" onchange="handleSlotFile(\'' + c.id + '\',\'slot2\',this.files[0]); this.value=\'\';"></div>';
+    html += '</div>';
+    html += '<p class="hint">Characters must be ultra realistic, with real skin texture and real hair texture. This character is reused as Character ' + esc(c.letter) + ' every time you pick her.</p>';
+    html += '<button class="btn danger small" onclick="deleteCharacter(\'' + c.id + '\')">Remove character</button></div>';
+  });
+  wrap.innerHTML = html;
+}
+function deleteCharacter(id){
+  if (!confirm('Remove this character from the Vault? Runs already in the Queue keep the details they saved.')) return;
+  state.characters = state.characters.filter(function(c){return c.id !== id;});
+  save(); renderVault(); fillCharacterPickers();
+}
+
+/* Intake */
+document.getElementById('inCharacter').addEventListener('change', function(){
+  document.getElementById('inNewChar').style.display = this.value === '__new' ? 'block' : 'none';
+});
+document.querySelectorAll('input[name="inPres"]').forEach(function(r){
+  r.addEventListener('change', function(){
+    document.getElementById('inPresHint').textContent = 'Prompt sentence: ' + presSentence(document.querySelector('input[name="inPres"]:checked').value);
+  });
+});
+document.getElementById('intakeForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var charSel = document.getElementById('inCharacter').value;
+  var characterId = '', snapshot = null;
+  if (charSel === '__new'){
+    var nm = document.getElementById('inNewName').value.trim();
+    var vc = document.getElementById('inNewVoice').value.trim();
+    if (!nm){ alert('Add the new character name, or pick a character from the Vault.'); return; }
+    var nc = {id:uid(), letter:nextLetter(), name:nm, voice:vc, slot1:null, slot1Name:'', slot2:null, slot2Name:''};
+    state.characters.push(nc); characterId = nc.id; snapshot = nc;
+  } else if (charSel) {
+    characterId = charSel; snapshot = charById(charSel);
+  }
+  var pres = document.querySelector('input[name="inPres"]:checked').value;
+  var item = {
+    id: uid(), type:'full', agentKey:'', createdAt: Date.now(), status:'queued',
+    characterId: characterId,
+    characterLabel: snapshot ? charLabel(snapshot) : 'No character picked',
+    voice: snapshot ? (snapshot.voice || '') : '',
+    mode: document.getElementById('inMode').value,
+    presentation: pres,
+    topic: document.getElementById('inTopic').value.trim(),
+    length: document.getElementById('inLength').value.trim(),
+    productName: document.getElementById('inProductName').value.trim(),
+    productLink: document.getElementById('inProductLink').value.trim(),
+    refLink: document.getElementById('inRefLink').value.trim(),
+    notes: document.getElementById('inNotes').value.trim()
+  };
+  state.queue.unshift(item); save();
+  document.getElementById('intakeSaved').innerHTML = '<div class="notice" style="margin-top:14px">Saved to the Queue. Nothing has run yet. When you are ready, open the Queue and press Run in Chat on this run.</div>';
+  e.target.reset();
+  document.querySelector('input[name="inPres"][value="wearing"]').checked = true;
+  document.getElementById('inPresHint').textContent = 'Prompt sentence: Wearing the product, not holding it.';
+  document.getElementById('inNewChar').style.display = 'none';
+  fillCharacterPickers(); renderVault();
+});
+
+/* Solo forms */
+var soloState = {agent:'scout'};
+var soloSpecs = {
+  scout: {title:'Solo Pinterest Scout', needsPres:false, fields:[
+    ['topic','Topic','What should the Scout search for?'],
+    ['productFocus','Product or outfit focus','For example: satin pajama set on Amazon'],
+    ['notes','Notes','Anything else for this search']]},
+  image: {title:'Solo Image Agent', needsPres:false, fields:[
+    ['topic','Topic','What is this image job about?'],
+    ['imageJob','Image job','For example: outfit reference sheet in chat, PNG, 9:16'],
+    ['notes','Notes','Anything else for this job']]},
+  story: {title:'Solo Story Agent', needsPres:true, fields:[
+    ['topic','Topic','What is this video about?'],
+    ['length','Length','For example: 30 seconds'],
+    ['productName','Product name','Product name, when there is one'],
+    ['productLink','Product link','https://'],
+    ['notes','Notes','Hook ideas, must-say lines, anything else']]},
+  videoexpress: {title:'Solo VideoExpress Agent', needsPres:true, fields:[
+    ['topic','Topic','What is this video about?'],
+    ['length','Length','For example: 30 seconds'],
+    ['productName','Product name','Product name, when there is one'],
+    ['productLink','Product link','https://'],
+    ['refLink','Reference video link','https://'],
+    ['notes','Notes','Scene notes, script location, anything else']]},
+  caption: {title:'Solo Caption Agent', needsPres:false, fields:[
+    ['topic','Topic','What is this video about?'],
+    ['productName','Product name','Product name, when there is one'],
+    ['notes','Notes','Tone, must-use words, anything else']]}
+};
+document.getElementById('soloTabs').addEventListener('click', function(e){
+  if (e.target.tagName !== 'BUTTON') return;
+  soloState.agent = e.target.getAttribute('data-agent');
+  var btns = document.querySelectorAll('#soloTabs button');
+  for (var i=0;i<btns.length;i++) btns[i].classList.toggle('active', btns[i] === e.target);
+  renderSolo();
+});
+function renderSolo(){
+  var key = soloState.agent, spec = soloSpecs[key];
+  var html = '<h3>' + spec.title + '</h3>';
+  html += '<label>Character (when relevant)</label><select data-charpicker data-solochar><option value="">Pick a character</option></select>';
+  html += '<label>Mode</label><select data-solomode>' + MODES.map(function(m){return '<option>' + m + '</option>';}).join('') + '</select>';
+  if (spec.needsPres){
+    html += '<label>Product Presentation (pick one)</label><div class="radio-row">'
+      + '<label class="radio-pill"><input type="radio" name="soloPres" value="wearing" checked> Wearing the product</label>'
+      + '<label class="radio-pill"><input type="radio" name="soloPres" value="holding"> Holding the product</label></div>'
+      + '<div class="hint">This solo form includes the Product Presentation choice, like the full intake form.</div>';
+  }
+  spec.fields.forEach(function(f){
+    html += '<label>' + f[1] + '</label><input type="text" data-solofield="' + f[0] + '" placeholder="' + esc(f[2]) + '">';
+  });
+  html += '<div style="margin-top:14px"><button class="btn" onclick="buildSoloPrompt()">Build my prompt</button> '
+    + '<button class="btn secondary" onclick="addSoloToQueue()">Add this job to the Queue</button></div>';
+  html += '<div id="soloOut" style="margin-top:14px"></div>';
+  document.getElementById('soloForms').innerHTML = html;
+  fillCharacterPickers();
+}
+function soloValues(){
+  var key = soloState.agent, spec = soloSpecs[key];
+  var charSel = document.querySelector('[data-solochar]');
+  var c = charSel && charSel.value ? charById(charSel.value) : null;
+  var vals = {agentKey:key, characterId: c ? c.id : '', characterLabel: c ? charLabel(c) : 'No character picked', voice: c ? (c.voice || '') : '',
+    mode: document.querySelector('[data-solomode]').value,
+    presentation: spec.needsPres ? document.querySelector('input[name="soloPres"]:checked').value : ''};
+  spec.fields.forEach(function(f){ var el = document.querySelector('[data-solofield="' + f[0] + '"]'); vals[f[0]] = el ? el.value.trim() : ''; });
+  vals.topic = vals.topic || ''; vals.length = vals.length || ''; vals.productName = vals.productName || ''; vals.productLink = vals.productLink || ''; vals.refLink = vals.refLink || ''; vals.notes = vals.notes || '';
+  return vals;
+}
+function buildSoloPrompt(){
+  var v = soloValues();
+  document.getElementById('soloOut').innerHTML = '<label>Your ready to copy prompt</label><div class="prompt-out" id="soloPromptText">' + esc(buildSoloPromptText(v)) + '</div><button class="btn small" style="margin-top:10px" onclick="copyText(document.getElementById(\'soloPromptText\').innerText)">Copy prompt</button>';
+}
+function addSoloToQueue(){
+  var v = soloValues();
+  if (!v.topic){ alert('Add a topic first, so the Queue card says what this job is.'); return; }
+  var item = {id:uid(), type:'solo', agentKey:v.agentKey, createdAt:Date.now(), status:'queued',
+    characterId:v.characterId, characterLabel:v.characterLabel, voice:v.voice, mode:v.mode,
+    presentation: v.presentation || 'wearing', presentationNA: !v.presentation,
+    topic:v.topic, length:v.length || '', productName:v.productName || '', productLink:v.productLink || '', refLink:v.refLink || '', notes:v.notes || '',
+    soloExtra: v};
+  state.queue.unshift(item); save();
+  document.getElementById('soloOut').innerHTML = '<div class="notice">Added to the Queue. Open the Queue and use Run in Chat when you are ready. Nothing has run yet.</div>';
+}
+function copyText(t){
+  if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(function(){ alert('Prompt copied. Paste it into a new chat to run it.'); }, function(){ fallbackCopy(t); }); }
+  else fallbackCopy(t);
+}
+function fallbackCopy(t){
+  var ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); alert('Prompt copied. Paste it into a new chat to run it.'); } catch(e){ alert('Copy did not work in this browser. Long press or select the prompt text to copy it by hand.'); }
+  document.body.removeChild(ta);
+}
+</script>
+<script>
+/* Prompt builders */
+function slotStatusText(item){
+  var c = item.characterId ? charById(item.characterId) : null;
+  if (!c) return {s1:'No character picked', s2:'No character picked', c:null};
+  return {s1: c.slot1 ? 'Uploaded (' + (c.slot1Name || 'photo on file') + ')' : 'Missing, add it in the Character Vault', s2: c.slot2 ? 'Uploaded (' + (c.slot2Name || 'photo on file') + ')' : 'Missing, add it in the Character Vault', c:c};
+}
+function buildFullPrompt(item){
+  var st = slotStatusText(item);
+  var lines = [];
+  lines.push('Run this Glam UGC Farm run exactly as listed. Do not swap any details.');
+  lines.push('');
+  lines.push('Character: ' + item.characterLabel);
+  lines.push('Voice: ' + (item.voice || 'Not added yet'));
+  lines.push('Slot 1 headshot: ' + st.s1);
+  lines.push('Slot 2 body reference sheet (one single 9:16 photo): ' + st.s2);
+  lines.push('Mode: ' + item.mode);
+  lines.push('Product Presentation: ' + presLabel(item.presentation) + ' - ' + presSentence(item.presentation));
+  lines.push('Topic: ' + (item.topic || ''));
+  lines.push('Length: ' + (item.length || 'Not set'));
+  lines.push('Product: ' + (item.productName || 'None') + (item.productLink ? ' - ' + item.productLink : ''));
+  lines.push('Reference video: ' + (item.refLink || 'None'));
+  lines.push('Notes: ' + (item.notes || 'None'));
+  lines.push('');
+  lines.push('Run the 5 agents in order:');
+  lines.push('1. Pinterest Scout: Search Pinterest from guest view, no sign in, for outfits and products for this mode and topic, especially products available on Amazon. Look for outfits that have an Amazon affiliate link. Do not go to Amazon to check price or availability at this step.');
+  lines.push('2. Image Agent: Create the images in chat. Ultra realistic, real skin texture and real hair texture. Every image is PNG, not webp, and 9:16. First lock the outfit in chat: using the locked character reference photos, put this character in the exact Pinterest outfit in chat and check face match and outfit match. Then, from that approved outfit photo, make one single 9:16 outfit reference sheet with front, profile and three quarter shots of her in that outfit, all on the same photo, saved as PNG.');
+  lines.push('3. Story Agent: Write the hook, the shots and the script. Label every scene with this run Product Presentation choice: ' + presSentence(item.presentation) + ' Write scene action only for the VideoExpress prompts, never a description of the character.');
+  lines.push('4. VideoExpress Agent: Make the video in VideoExpress at https://app.videoexpress.ai/ using Consistent Character. Choose Create with AI, go to the first option and click Consistent Character, then use Consistent Character Reference. Reference One is the headshot. Reference Two is the chat made outfit reference sheet. Never leave Slot 2 empty. No character bible is needed and do not paste one in. Use this prompt shape for every scene and nothing else about her: Use the reference images and keep the character perfectly consistent. [Scene action only.] [Spoken line, if any.] ' + presSentence(item.presentation) + ' Never describe her face, hair, skin, body or outfit, because describing her overrides the references. Standing upload permission covers uploads to VideoExpress for this run. It does not cover posting or publishing. Return the finished video in chat for approval. Do not post it.');
+  lines.push('5. Caption Agent: Write the TikTok caption, the on-screen hook and the hashtags for posting. No price, discount or sale claim unless a live price was actually verified.');
+  lines.push('');
+  lines.push('Product Presentation rule: wearing or holding, never both in the same shot. Reject and regenerate any image that shows both. If the video needs both, use separate scenes, holding first and wearing later.');
+  lines.push('Character rule: Character ' + (st.c ? st.c.letter : '') + ' is reused as that same character. Within this video, identity, clothing, location and lighting stay frozen from the uploaded reference photos.');
+  return lines.join('\n');
+}
+function buildSoloPromptText(v){
+  var agent = AGENTS[v.agentKey];
+  var lines = [];
+  lines.push('Run this solo ' + agent.name + ' job for the Glam UGC Farm, exactly as listed. Do not swap any details.');
+  lines.push('');
+  lines.push('Agent: ' + agent.num + '. ' + agent.name);
+  lines.push('Character: ' + v.characterLabel);
+  lines.push('Voice: ' + (v.voice || 'Not added yet'));
+  if (v.agentKey === 'image' || v.agentKey === 'videoexpress' || v.agentKey === 'story'){
+    var c = v.characterId ? charById(v.characterId) : null;
+    lines.push('Slot 1 headshot: ' + (c ? (c.slot1 ? 'Uploaded (' + (c.slot1Name || 'photo on file') + ')' : 'Missing, add it in the Character Vault') : 'No character picked'));
+    lines.push('Slot 2 body reference sheet (one single 9:16 photo): ' + (c ? (c.slot2 ? 'Uploaded (' + (c.slot2Name || 'photo on file') + ')' : 'Missing, add it in the Character Vault') : 'No character picked'));
+  }
+  lines.push('Mode: ' + v.mode);
+  if (v.presentation) lines.push('Product Presentation: ' + presLabel(v.presentation) + ' - ' + presSentence(v.presentation));
+  lines.push('Topic: ' + (v.topic || ''));
+  if (v.length) lines.push('Length: ' + v.length);
+  if (v.productName || v.productLink) lines.push('Product: ' + (v.productName || '') + (v.productLink ? ' - ' + v.productLink : ''));
+  if (v.refLink) lines.push('Reference video: ' + v.refLink);
+  Object.keys(v).forEach(function(k){
+    if (['agentKey','characterId','characterLabel','voice','mode','presentation','topic','length','productName','productLink','refLink','notes'].indexOf(k) === -1 && v[k]) lines.push(k + ': ' + v[k]);
+  });
+  if (v.notes) lines.push('Notes: ' + v.notes);
+  lines.push('');
+  if (v.agentKey === 'scout') lines.push('Job: Search Pinterest from guest view, no sign in, for outfits and products for this mode and topic, especially products available on Amazon. Look for outfits that have an Amazon affiliate link. Do not go to Amazon to check price or availability at this step. Bring back the best pins and the outfit pictures.');
+  if (v.agentKey === 'image') lines.push('Job: Create the images in chat. Ultra realistic, real skin texture and real hair texture. Every image is PNG, not webp, and 9:16. Lock the outfit in chat using the locked character reference photos, check face match and outfit match, then make one single 9:16 outfit reference sheet with front, profile and three quarter shots, all on the same photo, as PNG.');
+  if (v.agentKey === 'story') lines.push('Job: Write the hook, the shots and the script. Label every scene with this Product Presentation choice: ' + presSentence(v.presentation || 'wearing') + ' Write scene action only for the VideoExpress prompts, never a description of the character.');
+  if (v.agentKey === 'videoexpress') lines.push('Job: Make the video in VideoExpress at https://app.videoexpress.ai/ using Consistent Character. Choose Create with AI, go to the first option and click Consistent Character, then use Consistent Character Reference. Reference One is the headshot. Reference Two is the chat made outfit reference sheet. Never leave Slot 2 empty. No character bible. Every scene prompt uses this shape only: Use the reference images and keep the character perfectly consistent. [Scene action only.] [Spoken line, if any.] ' + presSentence(v.presentation || 'wearing') + ' Never describe her face, hair, skin, body or outfit. Standing upload permission covers VideoExpress uploads for this job. It does not cover posting or publishing. Return the finished video in chat for approval. Do not post it.');
+  if (v.agentKey === 'caption') lines.push('Job: Write the TikTok caption, the on-screen hook and the hashtags for posting. No price, discount or sale claim unless a live price was actually verified.');
+  if (v.presentation) lines.push('Product Presentation rule: wearing or holding, never both in the same shot.');
+  return lines.join('\n');
+}
+function promptForItem(item){
+  if (item.type === 'solo'){
+    var v = item.soloExtra || {agentKey:item.agentKey, characterId:item.characterId, characterLabel:item.characterLabel, voice:item.voice, mode:item.mode, presentation: item.presentationNA ? '' : item.presentation, topic:item.topic, length:item.length, productName:item.productName, productLink:item.productLink, refLink:item.refLink, notes:item.notes};
+    return buildSoloPromptText(v);
+  }
+  return buildFullPrompt(item);
+}
+
+/* Queue */
+function renderQueue(){
+  var wrap = document.getElementById('queueList');
+  if (!state.queue.length){
+    wrap.innerHTML = '<div class="empty">Your Queue is empty. Full runs come from the Video Intake Form, and solo jobs come from the Solo Agent Forms. Nothing has been added yet.</div>';
+    return;
+  }
+  var html = '';
+  state.queue.forEach(function(item){
+    var title = item.type === 'solo' ? ('Solo job - ' + AGENTS[item.agentKey].name) : 'Full farm run';
+    html += '<div class="queue-card">';
+    html += '<h3 style="margin:0 0 8px">' + esc(title) + ' &nbsp;<span class="badge ' + item.status + '">' + esc(item.status) + '</span></h3>';
+    html += '<p class="kv"><b>Character:</b> ' + esc(item.characterLabel) + '<br>';
+    html += '<b>Mode:</b> ' + esc(item.mode) + '<br>';
+    if (item.presentationNA) html += '<b>Product Presentation:</b> Not part of this solo job<br>';
+    else html += '<b>Product Presentation:</b> ' + esc(presLabel(item.presentation)) + ' - ' + esc(presSentence(item.presentation)) + '<br>';
+    html += '<b>Topic:</b> ' + esc(item.topic || '') + '<br>';
+    if (item.length) html += '<b>Length:</b> ' + esc(item.length) + '<br>';
+    if (item.productName || item.productLink) html += '<b>Product:</b> ' + esc(item.productName || '') + (item.productLink ? ' - ' + esc(item.productLink) : '') + '<br>';
+    html += '<b>Saved:</b> ' + new Date(item.createdAt).toLocaleString() + '</p>';
+    html += '<button class="btn small" onclick="runInChat(\'' + item.id + '\')">Run in Chat</button>';
+    ['queued','working','done'].forEach(function(s){ html += '<button class="btn secondary small" onclick="setStatus(\'' + item.id + '\',\'' + s + '\')">' + s + '</button>'; });
+    html += '<button class="btn danger small" onclick="deleteQueueItem(\'' + item.id + '\')">Delete</button>';
+    html += '</div>';
+  });
+  wrap.innerHTML = html;
+}
+function findItem(id){ for (var i=0;i<state.queue.length;i++) if (state.queue[i].id===id) return state.queue[i]; return null; }
+function setStatus(id, s){ var it = findItem(id); if (!it) return; it.status = s; save(); renderQueue(); }
+function deleteQueueItem(id){ if (!confirm('Delete this Queue item?')) return; state.queue = state.queue.filter(function(q){return q.id!==id;}); save(); renderQueue(); document.getElementById('runCardWrap').style.display='none'; }
+function runInChat(id){
+  var item = findItem(id); if (!item) return;
+  item.status = 'working'; save(); renderQueue();
+  var st = slotStatusText(item);
+  var c = st.c;
+  var thumb1 = c && c.slot1 ? '<img class="thumb" src="' + c.slot1 + '" alt="Slot 1 headshot">' : '<span class="thumb-missing">Slot 1 missing</span>';
+  var thumb2 = c && c.slot2 ? '<img class="thumb" src="' + c.slot2 + '" alt="Slot 2 body reference sheet">' : '<span class="thumb-missing">Slot 2 missing</span>';
+  var html = '<p class="kv"><b>Character:</b> ' + esc(item.characterLabel) + '</p>';
+  html += '<div style="margin:8px 0">' + thumb1 + ' ' + thumb2 + '</div>';
+  html += '<p class="kv"><b>Slot 1 headshot:</b> ' + esc(st.s1) + '<br><b>Slot 2 body reference sheet (single 9:16 photo):</b> ' + esc(st.s2) + '<br>';
+  html += '<b>Voice:</b> ' + esc(item.voice || 'Not added yet') + '<br>';
+  html += '<b>Mode:</b> ' + esc(item.mode) + '<br>';
+  if (item.presentationNA) html += '<b>Product Presentation:</b> Not part of this solo job<br>';
+  else html += '<b>Product Presentation:</b> ' + esc(presLabel(item.presentation)) + ' - ' + esc(presSentence(item.presentation)) + '<br>';
+  html += '<b>Topic:</b> ' + esc(item.topic || '') + '<br>';
+  if (item.length) html += '<b>Length:</b> ' + esc(item.length) + '<br>';
+  if (item.productName || item.productLink) html += '<b>Product:</b> ' + esc(item.productName || '') + (item.productLink ? ' - ' + esc(item.productLink) : '') + '<br>';
+  if (item.refLink) html += '<b>Reference video:</b> ' + esc(item.refLink) + '<br>';
+  if (item.notes) html += '<b>Notes:</b> ' + esc(item.notes) + '<br>';
+  html += '<b>Status:</b> working</p>';
+  html += '<label>The prompt for this exact run</label><div class="prompt-out" id="runPromptText">' + esc(promptForItem(item)) + '</div>';
+  html += '<button class="btn" style="margin-top:12px" onclick="copyText(document.getElementById(\'runPromptText\').innerText)">Copy prompt</button>';
+  html += '<p class="hint">This run is now marked working. Paste the copied prompt into a new chat to run it. There is no scheduled pickup, and nothing is posted automatically.</p>';
+  document.getElementById('runCard').innerHTML = html;
+  document.getElementById('runCardWrap').style.display = 'block';
+  showPage('queue'); renderQueue();
+  document.getElementById('runCardWrap').scrollIntoView({behavior:'smooth'});
+}
+
+/* Init */
+fillCharacterPickers();
+renderVault();
+renderSolo();
+renderQueue();
+</script>
+</body>
+</html>

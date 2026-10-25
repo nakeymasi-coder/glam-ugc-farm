@@ -1,0 +1,118 @@
+GLAM UGC FARM - MASTER REBUILD PROMPT
+Glam Hustle Hub
+
+WHAT THIS IS
+This is Glam's own rebuild prompt for her UGC Farm dashboard. If the farm ever needs rebuilding, or she wants a second farm in the same style, copy everything between START PROMPT and END PROMPT below and paste it as one message into a new chat or dashboard builder. It rebuilds the whole farm: dashboard, 5 agents, Character Vault, Queue, Run in Chat and all the locked rules.
+
+The dashboard holds the Video Intake Form, solo forms for all 5 agents, a Character Vault for locked characters, and a Queue for runs. The farm then runs in chat and in VideoExpress, from Pinterest outfit to finished 9:16 video, and brings the video back for approval. Nothing is posted automatically.
+
+HOW TO USE IT
+1. Copy everything between START PROMPT and END PROMPT. Do not copy just one section. The rules only work together.
+2. Paste it as one message into a new chat or dashboard builder.
+3. Let it build empty. No test characters, no test runs, no sample rows. Add real characters and runs after.
+4. Check it against the checklist at the end before using it.
+
+Voice note for whoever builds from this prompt: write in a personable, human tone, no em dashes. Use hyphens instead.
+
+
+START PROMPT - COPY FROM HERE
+
+Build me a UGC Agent Farm dashboard for Glam Hustle Hub.
+
+Build a single dashboard called Glam UGC Farm that holds my forms, my locked characters and my run queue in one place. I can pick an agent by itself, use a solo form by itself, or use the full Video Intake Form for a complete farm run, all inside this one dashboard. The dashboard is my intake, vault and queue control panel. It does not by itself browse Pinterest, generate images or run VideoExpress when I submit a form. Those steps are done in chat after submission. Be clear about that inside the dashboard copy. Do not promise automatic execution from the dashboard alone.
+
+DESIGN
+Branding: Glam Hustle Hub. Light sapphire, chrome silver and pearl white, with ombre gradients from sapphire to silver to pearl. Light, airy and luxurious. Butterfly motif. No dark or gloomy sections. Everything that relates to video or character references is 9:16 vertical, including headshots, body reference sheet shots and scene shots. Start empty. No test characters, no test runs and no sample rows ship with it. Add the standing twin-button CTA footer at the bottom: Join The Glam Vault linking to https://payhip.com/b/54LoK and Shop Glam Hustle Hub linking to https://glamhustlehub.com, equal side by side, plus the line: made with love by Indigo, Glam's AI assistant.
+
+PAGES THE DASHBOARD MUST HAVE
+- Home: explains the farm, the 5 agents, the 7 modes, the Product Presentation rule and how Run in Chat works.
+- Video Intake Form: the full farm run form, fields listed below, in that order.
+- Character Vault: locked characters A, B, C and so on, each reusable as that same character.
+- Solo Agent Forms: one form per agent, so a single agent job can run on its own.
+- Queue: every full run and solo job, with a status I can set to queued, working or done.
+- Queue rule: the Queue status button only changes the label. It does not run Pinterest, image generation or VideoExpress. Real execution is triggered from chat, using Run in Chat.
+
+VIDEO INTAKE FORM - FIELDS IN THIS ORDER
+1. Locked character picker, or create a new character
+2. Mode, see the 7 modes below
+3. Product Presentation, right after mode: one single choice, Wearing the product or Holding the product
+4. Topic
+5. Length, for example 30 seconds
+6. Product name and product link, when there is one
+7. Reference video link, when there is one
+8. Notes
+Save that one Product Presentation choice on the run. Show it on the Queue card and on the Run in Chat card, with its exact prompt sentence.
+
+CHARACTER VAULT - ONE RECORD PER LOCKED CHARACTER
+Character letter and name, for example Character A, plus a voice description.
+- Slot 1, headshot: one photo, 9:16.
+- Slot 2, body reference sheet: one single 9:16 photo, not separate photos, with front, side view, profile and three quarter shots all on that same photo.
+Every locked character must have both slots. A character is not locked until both are filled. Allow uploading a character I already have outside the dashboard, headshot for Slot 1 and single 9:16 body reference sheet for Slot 2, instead of only creating a character inside the dashboard. My uploaded Vault photos are accepted as JPG or PNG, as I saved them. Do not force my uploads to PNG.
+Characters must be ultra realistic, with real skin texture and real hair texture. Lock in rule: Character A is reused as Character A, Character B as Character B. Within one video, identity, clothing, location and lighting stay frozen from the uploaded reference photos.
+
+SOLO AGENT FORMS
+Build a solo form for each of the 5 agents, so I can use an agent by itself without a full run. The solo Story Agent form and the solo VideoExpress Agent form must also include the Product Presentation choice, Wearing the product or Holding the product. Each solo form produces a clean, ready to copy prompt for that agent job, prefilled from what I entered.
+
+QUEUE
+List full farm runs and solo jobs together, newest first. Each card shows character, mode, Product Presentation choice and its prompt sentence, topic, length, product and status. Status is manual: queued, working or done. Changing it does not execute anything.
+
+RUN IN CHAT
+Every Queue run gets a Run in Chat button. Pressing Run in Chat sets that run to working and opens a Run in Chat card. The card shows the locked character, Slot 1 headshot and Slot 2 single 9:16 body reference sheet status and location, with thumbnails when uploaded, voice, mode, Product Presentation choice and its exact prompt sentence, topic, length, product name and link, and reference video link when present. The card has a Copy prompt button. The copied prompt tells the assistant to run that exact run, with those exact details, nothing swapped. I paste that prompt into a new chat to run it. There is no scheduled pickup. Do not build one unless I ask for it separately.
+The same copied prompt structure applies to solo agent jobs: character and slots when relevant, voice, mode, Product Presentation, topic, length, product and links, so nothing has to be retyped.
+
+THE 5 AGENTS, IN ORDER
+1. Pinterest Scout: Searches Pinterest for outfits and products, especially products available on Amazon, for the chosen mode and topic. Works from guest view, no Pinterest sign in needed, just looking for pins. Looks for outfits that have an Amazon affiliate link. Does not go to Amazon to check price or availability at this step.
+2. Image Agent: Creates the person and avatar images. Ultra realistic, real skin texture and real hair texture. Creates the character references, the outfit reference and the outfit reference sheet, all in chat, all PNG, all 9:16.
+3. Story Agent: Writes the hook, the shots and the script. Labels every scene with the run's one Product Presentation choice. Writes scene action only for VideoExpress prompts, never a description of the character.
+4. VideoExpress Agent: Makes the video in VideoExpress at https://app.videoexpress.ai/ using the Consistent Character workflow below. Returns the finished video in chat for approval. Never posts it.
+5. Caption Agent: Writes the TikTok caption, on-screen hook and hashtags for posting. No price, discount or sale claim unless a live price was actually verified.
+
+THE 7 MODES
+Mode is a setting, not a separate farm. It changes the Pinterest search, the story structure, the shots and the captions.
+1. Get Ready With Me
+2. Spend The Day With Me
+3. Tutorials in general
+4. Makeup tutorials
+5. Hair tutorials
+6. Product reviews
+7. Cooking videos
+
+THE WORKFLOW, STEP BY STEP
+1. Pick the outfit on Pinterest. Choose the Pinterest outfit with an Amazon affiliate link. Copy its picture.
+2. Lock the outfit in chat, not in VideoExpress. Using the locked character's reference photos, put that character in that exact outfit in chat first. Check it for face match and outfit match.
+3. Make the outfit reference sheet in chat. From that approved outfit photo, create one single 9:16 reference sheet with front, profile and three quarter shots of her in that outfit, all on the same photo. Save it as PNG.
+4. Upload to VideoExpress. Slot 1 is her headshot. Slot 2 is that chat made outfit reference sheet. Never leave Slot 2 empty.
+5. Create scenes from that headshot plus sheet lock, in script order, 9:16.
+6. Export and return the video in chat for approval. Do not post, publish or share it.
+
+VIDEOEXPRESS - CONSISTENT CHARACTER, EVERY TIME
+Create with AI, go to the first option and click Consistent Character, then use Consistent Character Reference. Reference One: headshot. Reference Two: the chat made outfit reference sheet. Make sure Consistent Character is selected, then create image. No character bible is needed. The reference photos are the lock. Do not paste a bible into the scene prompts. Use this prompt shape for every scene, and nothing else about her:
+
+Use the reference images and keep the character perfectly consistent. [Scene action only.] [Spoken line, if any.] Wearing the product, not holding it.
+
+Never describe her in the prompt. No face, hair, skin, body or outfit description. Describing her overrides the references and creates a different girl. The last line swaps to the holding version when that is the run's choice.
+
+PRODUCT PRESENTATION - EITHER OR, NEVER BOTH
+Wearing run: every prompt ends with: Wearing the product, not holding it.
+Holding run: every prompt ends with: Holding the product, not wearing it.
+Never wearing an outfit while holding that same outfit on a hanger. Reject and regenerate any image that shows both. If a video needs both, holding first and wearing later, use separate scenes, never the same shot.
+
+STANDING RULES
+- Image format: Every image created for the farm must be PNG, not webp. That includes character images, outfit references and outfit reference sheets. My own uploaded Vault photos stay as I saved them, JPG or PNG. Reject webp uploads with a clear message that JPG or PNG are accepted.
+- Permissions: Standing upload permission for VideoExpress. The assistant has full permission to upload to VideoExpress for farm runs without stopping to ask each time. That covers headshots, body reference sheets, chat made outfit references, outfit reference sheets and scene files. That permission does not cover posting or publishing. Those still need my separate approval. Sign in screens and Terms screens still pause for me.
+- VideoExpress billing is usage based, not credits. Do not pause a run for credits. Keep going.
+
+ACCEPTANCE CHECKLIST - THE BUILD IS NOT DONE UNTIL ALL OF THESE ARE TRUE
+- One dashboard with Home, Video Intake Form, Character Vault, Solo Agent Forms and Queue, in Glam Hustle Hub branding, and it starts completely empty.
+- 5 solo agent forms, and the full intake form puts Product Presentation right after mode.
+- Character Vault enforces Slot 1 headshot and Slot 2 single 9:16 reference sheet for every locked character.
+- Queue cards and Run in Chat cards show the Product Presentation choice and its exact prompt sentence, and both are baked into the copied prompts.
+- Run in Chat sets the run to working, shows slot thumbnails and status, and copies a complete run prompt.
+- All workflows above are written into the dashboard and into the agent prompts: Pinterest guest view, outfit lock in chat, outfit sheet in chat as PNG, Consistent Character first option in VideoExpress, no character description in prompts, and wearing or holding, never both.
+- Dashboard copy states plainly that the dashboard itself does not execute Pinterest, image generation or VideoExpress, and that nothing is auto-posted.
+
+Build it exactly like this. If a rule above conflicts with a default you would normally use, this prompt wins.
+
+END PROMPT - COPY TO HERE
+
+Keep this file with your farm docs, Glam.
