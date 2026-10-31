@@ -180,6 +180,7 @@
 
       <label for="inMode">2. Mode</label>
       <select id="inMode">
+        <option>None</option>
         <option>Get Ready With Me</option>
         <option>Spend The Day With Me</option>
         <option>Tutorials in general</option>
@@ -191,10 +192,17 @@
 
       <label>3. Product Presentation (pick one)</label>
       <div class="radio-row">
-        <label class="radio-pill"><input type="radio" name="inPres" value="wearing" checked> Wearing the product</label>
+        <label class="radio-pill"><input type="radio" name="inPres" value="none" checked> None - product is not presented</label>
+        <label class="radio-pill"><input type="radio" name="inPres" value="wearing"> Wearing the product</label>
         <label class="radio-pill"><input type="radio" name="inPres" value="holding"> Holding the product</label>
+        <label class="radio-pill"><input type="radio" name="inPres" value="using"> Using the product</label>
+        <label class="radio-pill"><input type="radio" name="inPres" value="closeup"> Showing it close to camera</label>
+        <label class="radio-pill"><input type="radio" name="inPres" value="beside"> Sitting beside her in frame</label>
+        <label class="radio-pill"><input type="radio" name="inPres" value="unboxing"> Unboxing / opening it</label>
+        <label class="radio-pill"><input type="radio" name="inPres" value="byface"> Holding it up by her face</label>
+        <label class="radio-pill"><input type="radio" name="inPres" value="mixed"> Holding in some scenes, wearing in others</label>
       </div>
-      <div class="hint" id="inPresHint">Prompt sentence: Wearing the product, not holding it.</div>
+      <div class="hint" id="inPresHint">Prompt sentence: none - no presentation sentence on this run.</div>
 
       <label for="inTopic">4. Topic</label>
       <input type="text" id="inTopic" required placeholder="What is this video about?">
@@ -298,8 +306,8 @@ try {
 function save(){ try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch(e) { alert('This browser could not save. If you opened this page in an in-app preview, open the file in a regular browser so your Vault and Queue can save.'); } }
 function uid(){ return 'id' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
 function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function presSentence(p){ return p === 'holding' ? 'Holding the product, not wearing it.' : 'Wearing the product, not holding it.'; }
-function presLabel(p){ return p === 'holding' ? 'Holding the product' : 'Wearing the product'; }
+function presSentence(p){ if(p==='holding') return 'Holding the product, not wearing it.'; if(p==='none') return ''; if(p==='using') return 'Using the product on camera, not just holding it.'; if(p==='closeup') return 'Showing the product close to camera.'; if(p==='beside') return 'The product sits beside her in frame - she is not holding it or wearing it.'; if(p==='unboxing') return 'Unboxing the product on camera.'; if(p==='byface') return 'Holding the product up beside her face.'; if(p==='mixed') return 'Holding the product in some scenes and wearing it in others - never both in the same shot.'; return 'Wearing the product, not holding it.'; }
+function presLabel(p){ if(p==='holding') return 'Holding the product'; if(p==='none') return 'None - product is not presented'; if(p==='using') return 'Using the product'; if(p==='closeup') return 'Showing it close to camera'; if(p==='beside') return 'Sitting beside her in frame'; if(p==='unboxing') return 'Unboxing / opening it'; if(p==='byface') return 'Holding it up by her face'; if(p==='mixed') return 'Holding in some scenes, wearing in others'; return 'Wearing the product'; }
 function nextLetter(){ var used = state.characters.map(function(c){return c.letter;}); var i = 0; while (used.indexOf(String.fromCharCode(65+i)) !== -1) i++; return String.fromCharCode(65+i); }
 function charById(id){ for (var i=0;i<state.characters.length;i++) if (state.characters[i].id===id) return state.characters[i]; return null; }
 function charLabel(c){ return c ? ('Character ' + c.letter + (c.name ? ' - ' + c.name : '')) : 'No character picked'; }
@@ -428,8 +436,8 @@ document.getElementById('intakeForm').addEventListener('submit', function(e){
   state.queue.unshift(item); save();
   document.getElementById('intakeSaved').innerHTML = '<div class="notice" style="margin-top:14px">Saved to the Queue. Nothing has run yet. When you are ready, open the Queue and press Run in Chat on this run.</div>';
   e.target.reset();
-  document.querySelector('input[name="inPres"][value="wearing"]').checked = true;
-  document.getElementById('inPresHint').textContent = 'Prompt sentence: Wearing the product, not holding it.';
+  document.querySelector('input[name="inPres"][value="none"]').checked = true;
+  document.getElementById('inPresHint').textContent = 'Prompt sentence: none - no presentation sentence on this run.';
   document.getElementById('inNewChar').style.display = 'none';
   fillCharacterPickers(); renderVault();
 });
@@ -474,11 +482,18 @@ function renderSolo(){
   var key = soloState.agent, spec = soloSpecs[key];
   var html = '<h3>' + spec.title + '</h3>';
   html += '<label>Character (when relevant)</label><select data-charpicker data-solochar><option value="">Pick a character</option></select>';
-  html += '<label>Mode</label><select data-solomode>' + MODES.map(function(m){return '<option>' + m + '</option>';}).join('') + '</select>';
+  html += '<label>Mode</label><select data-solomode><option>None</option>' + MODES.map(function(m){return '<option>' + m + '</option>';}).join('') + '</select>';
   if (spec.needsPres){
     html += '<label>Product Presentation (pick one)</label><div class="radio-row">'
-      + '<label class="radio-pill"><input type="radio" name="soloPres" value="wearing" checked> Wearing the product</label>'
-      + '<label class="radio-pill"><input type="radio" name="soloPres" value="holding"> Holding the product</label></div>'
+      + '<label class="radio-pill"><input type="radio" name="soloPres" value="none" checked> None - product is not presented</label>'
+      + '<label class="radio-pill"><input type="radio" name="soloPres" value="wearing"> Wearing the product</label>'
+      + '<label class="radio-pill"><input type="radio" name="soloPres" value="holding"> Holding the product</label>'
+      + '<label class="radio-pill"><input type="radio" name="soloPres" value="using"> Using the product</label>'
+      + '<label class="radio-pill"><input type="radio" name="soloPres" value="closeup"> Showing it close to camera</label>'
+      + '<label class="radio-pill"><input type="radio" name="soloPres" value="beside"> Sitting beside her in frame</label>'
+      + '<label class="radio-pill"><input type="radio" name="soloPres" value="unboxing"> Unboxing / opening it</label>'
+      + '<label class="radio-pill"><input type="radio" name="soloPres" value="byface"> Holding it up by her face</label>'
+      + '<label class="radio-pill"><input type="radio" name="soloPres" value="mixed"> Holding in some scenes, wearing in others</label></div>'
       + '<div class="hint">This solo form includes the Product Presentation choice, like the full intake form.</div>';
   }
   spec.fields.forEach(function(f){
@@ -543,7 +558,7 @@ function buildFullPrompt(item){
   lines.push('Slot 1 headshot: ' + st.s1);
   lines.push('Slot 2 body reference sheet (one single 9:16 photo): ' + st.s2);
   lines.push('Mode: ' + item.mode);
-  lines.push('Product Presentation: ' + presLabel(item.presentation) + ' - ' + presSentence(item.presentation));
+  lines.push(item.presentation === 'none' ? 'Product Presentation: ' + presLabel(item.presentation) : 'Product Presentation: ' + presLabel(item.presentation) + ' - ' + presSentence(item.presentation));
   lines.push('Topic: ' + (item.topic || ''));
   lines.push('Length: ' + (item.length || 'Not set'));
   lines.push('Product: ' + (item.productName || 'None') + (item.productLink ? ' - ' + item.productLink : ''));

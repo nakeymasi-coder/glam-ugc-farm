@@ -51,7 +51,7 @@ Every locked character must have both slots. A character is not locked until bot
 Characters must be ultra realistic, with real skin texture and real hair texture. Lock in rule: Character A is reused as Character A, Character B as Character B. Within one video, identity, clothing, location and lighting stay frozen from the uploaded reference photos.
 
 SOLO AGENT FORMS
-Build a solo form for each of the 5 agents, so I can use an agent by itself without a full run. The solo Story Agent form and the solo Muse Video Agent form must also include the Product Presentation choice, Wearing the product or Holding the product. Each solo form produces a clean, ready to copy prompt for that agent job, prefilled from what I entered.
+Build a solo form for each of the 5 agents, so I can use an agent by itself without a full run. The solo Story Agent form and the solo Muse Video Agent form must also include the Product Presentation choice (the full list, None included). Each solo form produces a clean, ready to copy prompt for that agent job, prefilled from what I entered.
 
 QUEUE
 List full farm runs and solo jobs together, newest first. Each card shows character, mode, Product Presentation choice and its prompt sentence, topic, length, product and status. Status is manual: queued, working or done. Changing it does not execute anything.
@@ -92,9 +92,12 @@ Use the reference images and keep the character perfectly consistent. [Scene act
 
 Never describe her in the prompt. No face, hair, skin, body or outfit description. Describing her overrides the references and creates a different girl. The last line swaps to the holding version when that is the run's choice.
 
-PRODUCT PRESENTATION - EITHER OR, NEVER BOTH
+PRODUCT PRESENTATION - ONE CHOICE PER RUN
+The choices: None (product not presented), Wearing the product, Holding the product, Using the product, Showing it close to camera, Sitting beside her in frame, Unboxing / opening it, Holding it up by her face, or Holding in some scenes and wearing in others.
 Wearing run: every prompt ends with: Wearing the product, not holding it.
 Holding run: every prompt ends with: Holding the product, not wearing it.
+Using run: every prompt ends with: Using the product on camera, not just holding it.
+None run: no presentation sentence is added to any prompt. Every other choice carries its own sentence, listed under THE SCENE PROMPT SHAPE.
 Never wearing an outfit while holding that same outfit on a hanger. Reject and regenerate any image that shows both. If a video needs both, holding first and wearing later, use separate scenes, never the same shot.
 
 STANDING RULES
